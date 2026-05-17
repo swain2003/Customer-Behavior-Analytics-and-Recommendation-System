@@ -11,13 +11,27 @@
 [![NumPy](https://img.shields.io/badge/NumPy-1.24+-013243?style=for-the-badge&logo=numpy)](https://numpy.org/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?style=for-the-badge&logo=scikitlearn)](https://scikit-learn.org/)
 [![MySQL](https://img.shields.io/badge/MySQL-Optional-4479A1?style=for-the-badge&logo=mysql)](https://www.mysql.com/)
-
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-D71F00?style=for-the-badge&logo=sqlalchemy)](https://www.sqlalchemy.org/)
+[![PyMySQL](https://img.shields.io/badge/PyMySQL-Database-orange?style=for-the-badge)](https://pymysql.readthedocs.io/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.34+-FF4B4B?style=for-the-badge&logo=streamlit)](https://streamlit.io/)
 [![Plotly](https://img.shields.io/badge/Plotly-5.20+-3F4F75?style=for-the-badge&logo=plotly)](https://plotly.com/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7+-11557C?style=for-the-badge)](https://matplotlib.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-0.13+-4C72B0?style=for-the-badge)](https://seaborn.pydata.org/)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter)](https://jupyter.org/)
+[![Streamlit Cloud](https://img.shields.io/badge/Deployment-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://streamlit.io/cloud)
+[![Power BI](https://img.shields.io/badge/PowerBI-Compatible-F2C811?style=for-the-badge&logo=powerbi)](https://powerbi.microsoft.com/)
+[![Tableau](https://img.shields.io/badge/Tableau-Compatible-E97627?style=for-the-badge&logo=tableau)](https://www.tableau.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-red?style=for-the-badge&logo=streamlit)](https://customer-behavior-analytics-and-recommendation-system.streamlit.app/)
 
 </div>
+
+---
+
+# 🌐 Live Deployment
+
+🚀 Streamlit Cloud Deployment:  
+https://customer-behavior-analytics-and-recommendation-system.streamlit.app/
 
 ---
 
@@ -50,6 +64,8 @@ The system covers the full analytics lifecycle:
 ✅ **MySQL integration** for production-grade data persistence (optional)  
 ✅ **BI-compatible CSV exports** (`bi_monthly_sales_export.csv`) for Power BI / Tableau  
 ✅ Unit-tested pipeline with `unittest`  
+✅ Deployable on **Streamlit Cloud**  
+✅ Modular architecture for scalability and production deployment  
 
 ---
 
@@ -83,6 +99,8 @@ flowchart TD
 - Customer retention insights (active months)
 - Top-N high-value customer leaderboard
 
+---
+
 ### 🧠 Machine Learning & Segmentation
 
 | Technique | Details |
@@ -92,31 +110,39 @@ flowchart TD
 | **Elbow Method** | Inertia curve for `k = 2…10` exported to `data/elbow_method.csv` |
 | **Cluster Visualization** | Recency vs. Monetary scatter saved to `visualizations/cluster_scatter.png` |
 
-RFM segments produced:
-
-| Segment | Meaning |
-|---|---|
-| High Value Customers | Best customers — recent, frequent, high spend |
-| Loyal Customers | Regular buyers with strong engagement |
-| Potential Customers | Growing, not yet top-tier |
-| At Risk Customers | Were good customers, now fading |
-| Lost Customers | Lowest recency, frequency, and spend |
+---
 
 ### 🎯 Recommendation Engine (`recommendation/engine.py`)
 
-- **Popularity-based** — ranks all categories by revenue + demand; filters out categories the customer already purchased from
-- **Segment-based** — finds the customer's RFM segment and ranks categories by transaction count within that segment; falls back to popularity-based when segment data is unavailable
+#### Popularity-Based Recommendations
+- Ranks categories using transaction count and revenue
+- Removes categories already purchased by the customer
+- Returns top-N categories
+
+#### Segment-Based Recommendations
+- Detects the customer's RFM segment
+- Finds trending categories within that segment
+- Falls back to popularity-based recommendations if insufficient data exists
+
+---
 
 ### 📈 Streamlit Dashboard (`dashboard/streamlit_app.py`)
 
-- KPI cards: Total Revenue, Unique Customers, Average Order Value
-- Monthly revenue line chart (Plotly)
-- RFM segment distribution bar chart
-- Top 20 CLV customers bar chart
-- Category × Month revenue heatmap
-- Top customers data table
-- Sidebar filters: City, Product Category, Customer ID
-- Personalized recommendations panel (popularity + segment)
+#### Dashboard Includes
+
+- KPI cards
+- Revenue trend charts
+- Segment distribution charts
+- Customer CLV rankings
+- Revenue heatmaps
+- Customer recommendation panel
+- Interactive sidebar filters
+- Downloadable data exports
+
+#### Sidebar Filters
+- City
+- Product Category
+- Customer ID
 
 ---
 
@@ -141,56 +167,53 @@ RFM segments produced:
 Customer-Behavior-Analytics-and-Recommendation-System/
 │
 ├── dashboard/
-│   └── streamlit_app.py          # Interactive Streamlit dashboard
+│   └── streamlit_app.py
 │
-├── data/                         # Generated data files (created by main.py)
+├── data/
 │   ├── transactions_raw.csv
 │   ├── transactions_processed.csv
-│   ├── transactions_enriched.csv # With RFM segment + cluster labels
+│   ├── transactions_enriched.csv
 │   ├── rfm_segments.csv
 │   ├── elbow_method.csv
 │   ├── customer_clv.csv
 │   └── bi_monthly_sales_export.csv
 │
 ├── models/
-│   ├── __init__.py
-│   ├── analytics.py              # CLV, revenue trend, retention, top customers
-│   ├── clustering.py             # K-Means, Elbow Method, cluster scatter plot
-│   └── rfm.py                    # RFM scoring and segment labelling
+│   ├── analytics.py
+│   ├── clustering.py
+│   └── rfm.py
 │
 ├── notebooks/
-│   └── customer_behavior_analysis.ipynb  # EDA and experimentation notebook
+│   └── customer_behavior_analysis.ipynb
 │
 ├── preprocessing/
-│   ├── __init__.py
-│   ├── data_pipeline.py          # Data generation, cleaning, feature engineering
-│   └── sql_integration.py        # Optional MySQL load utilities
+│   ├── data_pipeline.py
+│   └── sql_integration.py
 │
 ├── recommendation/
-│   ├── __init__.py
-│   └── engine.py                 # Popularity-based & segment-based recommenders
+│   └── engine.py
 │
 ├── reports/
-│   └── sample_report.md          # Sample business insights summary
+│   └── sample_report.md
 │
 ├── screenshots/
-│   └── dashboard.png             # Dashboard preview screenshot
+│   └── dashboard.png
 │
 ├── sql/
-│   ├── __init__.py
-│   ├── schema.sql                # MySQL table definitions
-│   ├── analytics_queries.sql     # Pre-written analytical SQL queries
-│   └── query_module.py           # Python wrapper to run SQL queries
+│   ├── schema.sql
+│   ├── analytics_queries.sql
+│   └── query_module.py
 │
 ├── tests/
-│   └── test_pipeline.py          # Unit tests for ETL, RFM, and recommendation logic
+│   └── test_pipeline.py
 │
 ├── visualizations/
-│   ├── plots.py                  # Plotly chart builders (revenue, heatmap, segments)
-│   └── cluster_scatter.png       # K-Means cluster scatter (generated by main.py)
+│   ├── plots.py
+│   └── cluster_scatter.png
 │
-├── main.py                       # Pipeline entry point — run this first
+├── .gitignore
 ├── requirements.txt
+├── main.py
 └── README.md
 ```
 
@@ -200,16 +223,18 @@ Customer-Behavior-Analytics-and-Recommendation-System/
 
 ### Prerequisites
 
-| Tool | Version | Notes |
-|---|---|---|
-| Python | 3.10+ | [python.org](https://www.python.org/downloads/) |
-| pip | latest | Bundled with Python |
-| Git | any | [git-scm.com](https://git-scm.com/) |
-| MySQL | 8.0+ | **Optional** — only needed for SQL integration |
+| Tool | Version |
+|---|---|
+| Python | 3.10+ |
+| pip | latest |
+| Git | latest |
+| MySQL | Optional |
 
 ---
 
-### Step 1 — Clone the repository
+## 🚀 Quick Start
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/swain2003/Customer-Behavior-Analytics-and-Recommendation-System.git
@@ -218,16 +243,16 @@ cd Customer-Behavior-Analytics-and-Recommendation-System
 
 ---
 
-### Step 2 — Create and activate a virtual environment
+### 2️⃣ Create Virtual Environment
 
-**Windows (PowerShell)**
+#### Windows
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-**Linux / macOS**
+#### Linux/macOS
 
 ```bash
 python -m venv .venv
@@ -236,79 +261,58 @@ source .venv/bin/activate
 
 ---
 
-### Step 3 — Install dependencies
+### 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> **Tip:** If you hit permission issues, add the `--user` flag:  
-> `pip install --user -r requirements.txt`
-
 ---
 
-### Step 4 — Run the data pipeline
-
-This generates all datasets and the cluster scatter plot:
+### 4️⃣ Run the Data Pipeline
 
 ```bash
 python main.py
 ```
 
-To customize the number of synthetic records:
+Custom rows:
 
 ```bash
 python main.py --rows 50000
 ```
 
-After a successful run, the `data/` directory will contain:
-
-```
-transactions_raw.csv
-transactions_processed.csv
-transactions_enriched.csv   ← required by the dashboard
-rfm_segments.csv
-elbow_method.csv
-customer_clv.csv
-bi_monthly_sales_export.csv
-```
-
 ---
 
-### Step 5 — Launch the interactive dashboard
+### 5️⃣ Launch Dashboard
 
 ```bash
 streamlit run dashboard/streamlit_app.py
 ```
 
-Open your browser at **[http://localhost:8501](http://localhost:8501)**
+Open:
 
-> **Note:** `python main.py` must be run at least once before launching the dashboard. The app reads `data/transactions_enriched.csv` and will display an error if the file is missing.
-
----
-
-### Step 6 — (Optional) Explore the Jupyter notebook
-
-```bash
-jupyter notebook
+```text
+http://localhost:8501
 ```
 
-Open `notebooks/customer_behavior_analysis.ipynb` for interactive EDA, segmentation experiments, and visualization prototyping.
-
 ---
 
-### Step 7 — (Optional) MySQL integration
+## ☁️ Streamlit Cloud Deployment
 
-1. Create the database and schema:
+### Deploy in 5 Steps
 
-   ```sql
-   -- Run schema.sql against your MySQL instance
-   mysql -u root -p < sql/schema.sql
-   ```
+1. Push project to GitHub
+2. Visit Streamlit Cloud
+3. Connect GitHub repository
+4. Select:
+   - Repository
+   - Branch
+   - `dashboard/streamlit_app.py`
+5. Click Deploy
 
-2. Configure the connection in `preprocessing/sql_integration.py` (host, user, password, database).
+### Live App
 
-3. The pipeline will then persist processed records to MySQL in addition to CSV.
+https://customer-behavior-analytics-and-recommendation-system.streamlit.app/
 
 ---
 
@@ -318,28 +322,20 @@ Open `notebooks/customer_behavior_analysis.ipynb` for interactive EDA, segmentat
 python -m unittest tests/test_pipeline.py -v
 ```
 
-The test suite covers:
-
-| Test | What is verified |
-|---|---|
-| `test_required_columns_exist_after_preprocessing` | All expected columns present after ETL |
-| `test_rfm_segmentation_outputs_labels` | RFM table contains `rfm_segment` with multiple distinct labels |
-| `test_recommendations_return_ranked_categories` | Recommendations return ≤ N string category names |
-
 ---
 
-## 📊 Generated Outputs Reference
+## 📊 Generated Outputs
 
 | File | Description |
 |---|---|
-| `data/transactions_raw.csv` | Raw synthetic transactions (before cleaning) |
-| `data/transactions_processed.csv` | Cleaned dataset with engineered features |
-| `data/transactions_enriched.csv` | Processed + RFM segment + cluster labels |
-| `data/rfm_segments.csv` | Per-customer RFM scores and segment labels |
-| `data/elbow_method.csv` | Inertia values for k = 2…10 |
-| `data/customer_clv.csv` | Customer Lifetime Value ranked table |
-| `data/bi_monthly_sales_export.csv` | Monthly revenue by category (Power BI / Tableau) |
-| `visualizations/cluster_scatter.png` | Recency × Monetary cluster scatter plot |
+| `transactions_raw.csv` | Raw generated transactions |
+| `transactions_processed.csv` | Cleaned & transformed dataset |
+| `transactions_enriched.csv` | Final enriched dataset |
+| `rfm_segments.csv` | Customer RFM scores |
+| `customer_clv.csv` | Customer Lifetime Value |
+| `elbow_method.csv` | KMeans inertia scores |
+| `bi_monthly_sales_export.csv` | BI-ready export |
+| `cluster_scatter.png` | Cluster visualization |
 
 ---
 
@@ -347,68 +343,125 @@ The test suite covers:
 
 ### RFM Analysis
 
-Each customer receives quantile-based scores (1 = lowest, 5 = highest) for:
+Customers are scored on:
 
-- **Recency** — days since last purchase (lower is better → score 5)
-- **Frequency** — total transaction count (higher is better → score 5)
-- **Monetary** — total spend (higher is better → score 5)
+- Recency
+- Frequency
+- Monetary value
 
-The three scores are concatenated into an RFM string (e.g. `"554"`) and mapped to a named segment.
+Scores range from 1–5.
+
+Example:
+
+```text
+RFM = 554
+```
+
+---
 
 ### K-Means Clustering
 
-1. Features — `Recency`, `Frequency`, `Monetary`
-2. Normalized with `StandardScaler`
-3. `KMeans(n_clusters=5, n_init=10, random_state=42)` fit on normalized data
-4. Cluster IDs written back to the RFM table and the enriched transactions file
-5. Elbow curve exported to `data/elbow_method.csv` for visual cluster selection
+Pipeline:
+
+1. Feature selection
+2. StandardScaler normalization
+3. KMeans clustering
+4. Elbow-method optimization
+5. Cluster labeling
 
 ---
 
 ## 💼 Business Impact
 
-| Use Case | How this project helps |
+| Use Case | Benefit |
 |---|---|
-| **Targeted marketing** | Identify High Value / At Risk segments for campaign prioritization |
-| **Customer retention** | Track active months and recency to flag churning customers |
-| **Personalised offers** | Segment- and popularity-based category recommendations per customer |
-| **Revenue forecasting** | Monthly revenue trend data ready for BI tools |
-| **Category strategy** | Revenue and transaction counts per product category |
-| **Executive reporting** | CLV leaderboard and KPI cards in the dashboard |
+| Customer Retention | Identify churn risk |
+| Marketing | Segment-specific campaigns |
+| Revenue Growth | Personalized recommendations |
+| BI Reporting | Executive dashboards |
+| Product Strategy | Category-level analytics |
 
 ---
 
 ## 🔮 Future Improvements
 
-- [ ] Real-time streaming pipeline with Apache Kafka / Spark
-- [ ] Collaborative filtering or matrix-factorization recommendation model
-- [ ] REST API (FastAPI) to expose recommendations and analytics endpoints
-- [ ] Cloud deployment (AWS / GCP / Azure) with containerisation (Docker)
-- [ ] User authentication for the Streamlit dashboard
-- [ ] Automated model retraining with Airflow or Prefect
-- [ ] Deep learning embeddings for customer representation
+- [ ] FastAPI REST API
+- [ ] Kafka/Spark streaming pipeline
+- [ ] Docker containerization
+- [ ] AWS/GCP deployment
+- [ ] Airflow automation
+- [ ] Collaborative filtering recommender
+- [ ] Authentication system
+- [ ] Deep learning recommendation engine
 
 ---
 
 ## 📸 Dashboard Preview
 
+### Streamlit Dashboard
+
 ![Dashboard Preview](screenshots/dashboard.png)
+
+---
+
+## 🌟 Why This Project Stands Out
+
+- Production-style architecture
+- End-to-end analytics pipeline
+- Machine learning integration
+- Dashboard + BI integration
+- Modular and scalable design
+- Real-world business applicability
+- Strong portfolio project for:
+  - Data Analyst
+  - Data Scientist
+  - ML Engineer
+  - Python Developer
+  - BI Developer roles
 
 ---
 
 ## 👨‍💻 Author
 
-**Anubhaba Swain**  
-B.Tech in Information Technology | KIIT University
+### Anubhaba Swain
+
+B.Tech in Information Technology  
+KIIT University
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/anubhaba-swain-695a7b176)
+
 [![GitHub](https://img.shields.io/badge/GitHub-swain2003-181717?style=flat&logo=github)](https://github.com/swain2003)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+### Steps
+
+1. Fork repository
+2. Create feature branch
+3. Commit changes
+4. Push branch
+5. Open Pull Request
 
 ---
 
 ## ⭐ Support
 
-If you found this project useful, please consider giving it a ⭐ on GitHub — it helps others discover the project!
+If you found this project useful:
+
+⭐ Star the repository  
+🍴 Fork the project  
+📢 Share with others  
 
 ---
 
+## 📜 License
+
+This project is licensed under the MIT License.
+
+See `LICENSE` for more details.
+
+---
