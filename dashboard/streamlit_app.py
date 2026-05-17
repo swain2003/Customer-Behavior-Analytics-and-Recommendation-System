@@ -50,18 +50,18 @@ def main() -> None:
     render_kpis(df)
 
     clv = calculate_clv(df)
-    st.plotly_chart(monthly_revenue_chart(df), use_container_width=True)
+    st.plotly_chart(monthly_revenue_chart(df), width="stretch")
 
     col1, col2 = st.columns(2)
     with col1:
-        st.plotly_chart(segment_distribution_chart(df), use_container_width=True)
+        st.plotly_chart(segment_distribution_chart(df), width="stretch")
     with col2:
-        st.plotly_chart(px.bar(clv.head(20), x="customer_id", y="clv", title="Top 20 CLV Customers"), use_container_width=True)
+        st.plotly_chart(px.bar(clv.head(20), x="customer_id", y="clv", title="Top 20 CLV Customers"), width="stretch")
 
-    st.plotly_chart(category_heatmap(df), use_container_width=True)
+    st.plotly_chart(category_heatmap(df), width="stretch")
 
     st.subheader("Top Customers")
-    st.dataframe(top_customers_dashboard(df), use_container_width=True)
+    st.dataframe(top_customers_dashboard(df), width="stretch")
 
     st.subheader("Personalized Recommendations")
     pop_recs = popularity_based_recommendations(df, int(customer_id))
