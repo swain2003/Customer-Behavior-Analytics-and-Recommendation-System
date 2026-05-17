@@ -1,13 +1,9 @@
+from __future__ import annotations
 import sys
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT_DIR))
-
-from __future__ import annotations
-
-from pathlib import Path
-
 import pandas as pd
 import plotly.express as px
 import streamlit as st
